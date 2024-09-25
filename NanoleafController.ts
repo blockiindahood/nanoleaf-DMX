@@ -56,7 +56,7 @@ export default class NanoleafController {
           this.logger.log(`[Nanoleaf Controller - Panel ${panel.id}]: Error sending UDP packet:`, err);
           reject(err)
         } else {
-          this.logger.log(`[Nanoleaf Controller - Panel ${panel.id}]: sending UDP packet`);
+          this.logger.log(`[Nanoleaf Controller - Panel ${panel.id}]: Sending UDP packet`);
           resolve()
         }
       });
@@ -73,9 +73,9 @@ export default class NanoleafController {
           extControlVersion: "v2"
         }
       });
-      this.logger.log('[Nanoleaf Controller]: extControl mode activated!');
+      this.logger.log('[Nanoleaf Controller]: ExtControl mode activated!');
     } catch (error) {
-      this.logger.log('[Nanoleaf Controller]: failed to activate extControl mode:', error);
+      this.logger.log('[Nanoleaf Controller]: Failed to activate extControl mode:', error);
     }
   }
 }

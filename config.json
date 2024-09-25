@@ -1,16 +1,19 @@
 {
+  "logging": true,
   "sACN": {
-    "universes": [1]
+    "universes": [1],
+    "iface": "10.200.1.245"
   },
   "controller": {
-    "ip": "",
-    "apiPort": 5568,
+    "ip": "10.1.50.181",
+    "apiPort": 16021,
     "socketPort": 60222,
-    "token": "p49Kg95gDSIh3u1ft3TvFXxgH47qQM4d"
+    "token": "p49Kg95gDSIh3u1ft3TvFXxgH47qQM4d",
+    "autoSetupPanels": true
   },
   "panels": [
     {
-      "panelId": 1,
+      "panelId": 15765,
       "dmxAddress": 1
     }
   ]

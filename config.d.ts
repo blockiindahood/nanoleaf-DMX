@@ -1,4 +1,5 @@
 export interface Config {
+    logging:    boolean;
     sACN: sACN
     controller: Controller;
     panels:     Panel[];
@@ -6,6 +7,7 @@ export interface Config {
 
 export interface sACN {
     universes: number[];
+    iface:     string;
 }
 
 export interface Controller {
@@ -13,6 +15,7 @@ export interface Controller {
     apiPort:       number;
     socketPort: number;
     token:      string;
+    autoSetupPanels: boolean;
 }
 
 export interface Panel {

@@ -1,21 +1,23 @@
 import {Receiver} from "sacn"
-import NanoleafPanel from "./NanoleafPanel";
 import * as fs from "node:fs";
 import {Config} from "./config";
 import NanoleafController from "./NanoleafController";
+import Logger from "./Logger";
 
 const config = JSON.parse(fs.readFileSync("config.json", "utf-8")) as Config
+const logger = new Logger(config.logging);
 
 const sACN = new Receiver({
     universes: config.sACN.universes,
+    iface: config.sACN.iface,
     reuseAddr: true
 });
 
-const controller = new NanoleafController(config.controller.ip, config.controller.apiPort, config.controller.socketPort, config.controller.token)
-controller.panels = config.panels.map(d => new NanoleafPanel(d.panelId, d.dmxAddress, controller));
+const controller = new NanoleafController(config, logger)
 
 async function main() {
-    await controller.activateExtControl();
+    await controller.init()
+
     sACN.on('packet', async (packet) => {
         // check whether something has changed, with 3 channels per panel
         await Promise.all(controller.panels.map(async panel => {

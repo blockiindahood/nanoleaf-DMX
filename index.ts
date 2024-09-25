@@ -1,6 +1,6 @@
 import {Receiver} from "sacn"
 import * as fs from "node:fs";
-import {Config} from "./config";
+import {Config} from "./types/config";
 import NanoleafController from "./NanoleafController";
 import Logger from "./Logger";
 

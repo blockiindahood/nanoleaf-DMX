@@ -2,7 +2,7 @@ import NanoleafPanel from "./NanoleafPanel";
 import axios from "axios";
 import dgram from "dgram";
 import Logger from "./Logger";
-import {Config} from "./config";
+import {Config} from "./types/config";
 
 export default class NanoleafController {
   ipAddress: string

@@ -16,6 +16,7 @@ export interface Controller {
     socketPort: number;
     token:      string;
     autoSetupPanels: boolean;
+    autoSetupDMXStartAddress: number;
 }
 
 export interface Panel {

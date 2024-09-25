@@ -41,7 +41,9 @@ export default class NanoleafController {
 
     if(this.config.controller.autoSetupPanels){
       //only works, if panels are daysi-chained
-      this.panels = panelIds.map((panelId, index) => new NanoleafPanel(panelId, 1 + index * 3, this));
+      //please note, that we have a value in the config named autoSetupDMXStartAddress, where we have to start, so please rewrite the code, to start at the right address
+      this.panels = panelIds.map((panelId, index) => new NanoleafPanel(panelId, this.config.controller.autoSetupDMXStartAddress + (index * 3), this));
+      this.logger.log('[Nanoleaf Controller]: Auto Setup Panels Active:', this.panels.map(p => "ID: " + p.id + " -> Address: " + p.dmxAddress).join(", "));
     }else{
       this.panels = this.config.panels.map(d => new NanoleafPanel(d.panelId, d.dmxAddress, this));
     }

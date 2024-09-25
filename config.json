@@ -9,7 +9,8 @@
     "apiPort": 16021,
     "socketPort": 60222,
     "token": "p49Kg95gDSIh3u1ft3TvFXxgH47qQM4d",
-    "autoSetupPanels": true
+    "autoSetupPanels": true,
+    "autoSetupDMXStartAddress": 10
   },
   "panels": [
     {

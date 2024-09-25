@@ -4,7 +4,14 @@ import {Config} from "./types/config";
 import NanoleafController from "./NanoleafController";
 import Logger from "./Logger";
 
-const config = JSON.parse(fs.readFileSync("config.json", "utf-8")) as Config
+let config: Config;
+try {
+    config = JSON.parse(fs.readFileSync("config.json", "utf-8")) as Config
+}catch (err) {
+    console.error("Error reading config.json")
+    process.exit(1)
+}
+
 const logger = new Logger(config.logging);
 
 const sACN = new Receiver({

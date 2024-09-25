@@ -65,7 +65,7 @@ export default class NanoleafController {
 
   async activateExtControl() {
     try {
-      this.logger.log('[Nanoleaf Controller]: activating extControl...');
+      this.logger.log('[Nanoleaf Controller]: Activating extControl...');
       await axios.put(`http://${this.ipAddress}:16021/api/v1/${this.token}/effects`, {
         write: {
           command: "display",

@@ -16,6 +16,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "run": "node dist/index.js"
+    "run": "node dist/index.js",
+    "docker-build": "docker build -t nanoleaf-sacn:v1 ."
   }
 }

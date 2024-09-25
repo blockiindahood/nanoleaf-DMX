@@ -1,28 +1,21 @@
 import axios from "axios"
 import {Receiver} from "sacn"
 import NanoleafPanel from "./NanoleafPanel";
+import * as fs from "node:fs";
+import {Config} from "./config";
 
-const NANOLEAF_IP_ADDRESS = '10.1.50.181';
-const NANOLEAF_TOKEN = 'p49Kg95gDSIh3u1ft3TvFXxgH47qQM4d'; // Replace with your Nanoleaf Token
-const NANOLEAF_UDP_PORT = 60222;
+// load config
+const config = JSON.parse(fs.readFileSync("config.json", "utf-8")) as Config
+
+const NANOLEAF_IP_ADDRESS = config.controller.ip;
+const NANOLEAF_TOKEN = config.controller.token;
 
 const sACN = new Receiver({
     universes: [1],
-    iface: "10.200.1.245",
     reuseAddr: true
 });
 
-const panels = [
-    new NanoleafPanel(15765, 1, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(36279, 5, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(49111, 9, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(39730, 13, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(37679, 17, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(6621, 21, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(9759, 25, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(54503, 29, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-    new NanoleafPanel(59703, 33, 0, NANOLEAF_IP_ADDRESS, NANOLEAF_UDP_PORT),
-]
+const panels = config.panels.map(d => new NanoleafPanel(d.panelId, d.dmxAddress, 0, config.controller.ip, config.controller.socketPort));
 
 main();
 

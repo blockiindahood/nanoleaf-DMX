@@ -1,0 +1,14 @@
+{
+  "controller": {
+    "ip": "",
+    "port": 5568,
+    "socketPort": 60222,
+    "token": "p49Kg95gDSIh3u1ft3TvFXxgH47qQM4d"
+  },
+  "panels": [
+    {
+      "panelId": 1,
+      "dmxAddress": 1
+    }
+  ]
+}

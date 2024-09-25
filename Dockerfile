@@ -20,4 +20,4 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 60222
-CMD [ "node dist/index.ts" ]
+CMD [ "node", "dist/index.js" ]

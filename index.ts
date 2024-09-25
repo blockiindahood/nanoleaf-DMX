@@ -1,30 +1,24 @@
-import axios from "axios"
 import {Receiver} from "sacn"
 import NanoleafPanel from "./NanoleafPanel";
 import * as fs from "node:fs";
 import {Config} from "./config";
+import NanoleafController from "./NanoleafController";
 
-// load config
 const config = JSON.parse(fs.readFileSync("config.json", "utf-8")) as Config
 
-const NANOLEAF_IP_ADDRESS = config.controller.ip;
-const NANOLEAF_TOKEN = config.controller.token;
-
 const sACN = new Receiver({
-    universes: [1],
+    universes: config.sACN.universes,
     reuseAddr: true
 });
 
-const panels = config.panels.map(d => new NanoleafPanel(d.panelId, d.dmxAddress, 0, config.controller.ip, config.controller.socketPort));
-
-main();
+const controller = new NanoleafController(config.controller.ip, config.controller.apiPort, config.controller.socketPort, config.controller.token)
+controller.panels = config.panels.map(d => new NanoleafPanel(d.panelId, d.dmxAddress, controller));
 
 async function main() {
-    await activateExtControl();
+    await controller.activateExtControl();
     sACN.on('packet', async (packet) => {
-        // check whether something has changed
-        // 3 channels per panel
-        await Promise.all(panels.map(async panel => {
+        // check whether something has changed, with 3 channels per panel
+        await Promise.all(controller.panels.map(async panel => {
             if (packet.payloadAsBuffer![panel.dmxAddress - 1] !== panel.r ||
               packet.payloadAsBuffer![panel.dmxAddress] !== panel.g ||
               packet.payloadAsBuffer![panel.dmxAddress + 1] !== panel.b) {
@@ -32,26 +26,11 @@ async function main() {
                 panel.r = packet.payloadAsBuffer![panel.dmxAddress - 1];
                 panel.g = packet.payloadAsBuffer![panel.dmxAddress];
                 panel.b = packet.payloadAsBuffer![panel.dmxAddress + 1];
-                await panel.update()
+                await controller.updatePanel(panel);
             }
         }))
     });
 
 }
 
-//Activate extControl mode
-async function activateExtControl() {
-    try {
-        console.log('[Nanoleaf Controller]: activating extControl...');
-        await axios.put(`http://${NANOLEAF_IP_ADDRESS}:16021/api/v1/${NANOLEAF_TOKEN}/effects`, {
-            write: {
-                command: "display",
-                animType: "extControl",
-                extControlVersion: "v2"
-            }
-        });
-        console.log('[Nanoleaf Controller]: extControl mode activated!');
-    } catch (error) {
-        console.error('[Nanoleaf Controller]: failed to activate extControl mode:', error);
-    }
-}
+main();

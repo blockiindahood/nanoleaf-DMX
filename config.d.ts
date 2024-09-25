@@ -1,11 +1,16 @@
 export interface Config {
+    sACN: sACN
     controller: Controller;
     panels:     Panel[];
 }
 
+export interface sACN {
+    universes: number[];
+}
+
 export interface Controller {
     ip:         string;
-    port:       number;
+    apiPort:       number;
     socketPort: number;
     token:      string;
 }

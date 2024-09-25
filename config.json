@@ -1,7 +1,10 @@
 {
+  "sACN": {
+    "universes": [1]
+  },
   "controller": {
     "ip": "",
-    "port": 5568,
+    "apiPort": 5568,
     "socketPort": 60222,
     "token": "p49Kg95gDSIh3u1ft3TvFXxgH47qQM4d"
   },

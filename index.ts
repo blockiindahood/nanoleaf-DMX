@@ -42,6 +42,7 @@ async function main() {
 //Activate extControl mode
 async function activateExtControl() {
     try {
+        console.log('[Nanoleaf Controller]: activating extControl...');
         await axios.put(`http://${NANOLEAF_IP_ADDRESS}:16021/api/v1/${NANOLEAF_TOKEN}/effects`, {
             write: {
                 command: "display",

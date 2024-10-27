@@ -1,5 +1,5 @@
 
-# nanoleaf-sACN
+# nanoleaf-DMX
 
 A libary to control Nanoleaf (only tested with Shapes) via sACN. 
 
